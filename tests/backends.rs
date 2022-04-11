@@ -5,6 +5,7 @@
 use std::process::Command;
 
 #[test]
+#[cfg_attr(miri, ignore)] // pipe2 is not supported under miri yet.
 fn test_backends() {
     // Test whether `has_dependency` works. `cargo tree` no longer works in
     // Rust 1.48 because `cargo tree` pulls in dependencies for all targets,
