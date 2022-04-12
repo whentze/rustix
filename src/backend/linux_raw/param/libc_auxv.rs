@@ -32,8 +32,8 @@ pub(crate) fn clock_ticks_per_second() -> u64 {
 pub(crate) fn linux_hwcap() -> (usize, usize) {
     if let Some(libc_getauxval) = getauxval.get() {
         unsafe {
-            let hwcap = libc_getauxval(libc::AT_HWCAP) as usize;
-            let hwcap2 = libc_getauxval(libc::AT_HWCAP2) as usize;
+            let hwcap = libc_getauxval(libc::AT_HWCAP).addr();
+            let hwcap2 = libc_getauxval(libc::AT_HWCAP2).addr();
             (hwcap, hwcap2)
         }
     } else {
@@ -56,7 +56,7 @@ pub(crate) fn linux_execfn() -> &'static CStr {
 pub(crate) fn exe_phdrs() -> (*const libc::c_void, usize) {
     unsafe {
         (
-            libc::getauxval(libc::AT_PHDR) as *const libc::c_void,
+            core::ptr::from_exposed_addr(libc::getauxval(libc::AT_PHDR) as usize),
             libc::getauxval(libc::AT_PHNUM) as usize,
         )
     }
