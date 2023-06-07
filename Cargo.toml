@@ -47,7 +47,7 @@ libc = { version = "0.2.142", default-features = false, features = ["extra_trait
 # On all other Unix-family platforms, and under Miri, we always use the libc
 # backend, so enable its dependencies unconditionally.
 [target.'cfg(all(not(windows), any(rustix_use_libc, miri, not(all(target_os = "linux", any(target_arch = "x86", all(target_arch = "x86_64", target_pointer_width = "64"), all(target_endian = "little", any(target_arch = "arm", all(target_arch = "aarch64", target_pointer_width = "64"), target_arch = "powerpc64", target_arch = "riscv64", target_arch = "mips", target_arch = "mips64"))))))))'.dependencies]
-libc_errno = { package = "errno", version = "0.3.1", default-features = false }
+libc_errno = { package = "errno", version = "0.3.1", default-features = false, optional = true }
 libc = { version = "0.2.144", features = ["extra_traits"] }
 
 # Additional dependencies for Linux with the libc backend:
